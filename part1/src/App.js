@@ -21,6 +21,7 @@ const App = () => {
   const copy = [...points];
    
   const [selected, setSelected] = useState(0);
+  const [maxVoteItm, setMaxVoteItm] = useState(points.indexOf(Math.max(...points)))
 
   const randomNumber = () => {
     setSelected(Math.floor(Math.random() * (6 - 0 + 1) + 0));
@@ -35,6 +36,9 @@ const App = () => {
       <div>{anecdotes[selected]}</div>
       <div>has {copy[selected]} votes</div>
       <Button text="vote" handleClick={addVote}/> <Button text="next anecdote" handleClick={randomNumber}/>
+      <h2>anecdote with most votes</h2>
+      <div>{anecdotes[maxVoteItm]}</div>
+      <div>has {copy[maxVoteItm]} votes</div>
     </>
   )
 }
