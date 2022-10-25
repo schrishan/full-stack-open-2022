@@ -1,62 +1,35 @@
-const Header = (props) => {
+import { useState } from 'react'
+
+
+const Button = (props) => (
+  <button onClick={props.handleClick}>
+    {props.text}
+  </button>
+)
+
+const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const setToGood = () => setGood(good + 1);
+  const setToNeutral = () => setNeutral(neutral + 1);
+  const setToBad = () => setBad(bad + 1);
+
   return (
     <div>
-      <h1>{props.course}</h1>
+      <h2>give feedback</h2>
+      <Button handleClick={setToGood} text="good" />
+      <Button handleClick={setToNeutral} text="neutral"/>
+      <Button handleClick={setToBad} text="bad"/>
+
+      <h2>statistics</h2>
+
+      <div>good {good}</div>
+      <div>neutral {neutral}</div>
+      <div>bad {bad}</div>
     </div>
   )
 }
 
-const Part = (props) =>{
-  return (
-  <p>{props.name} {props.exercises}</p>
-  )
-}
-
-const Content = (props) => {
-
-  const parts = props.parts.map(part => <Part key={part.name} name={part.name} exercises={part.exercises}/>)
-  return (
-    <div>
-      {parts}
-    </div>
-  )
-}
-
-const Total = (props) => {
-  let totalValue = 0;
-  props.parts.map(part => totalValue += part.exercises)
-  return(
-    <div>
-      <p>Number of exercises {totalValue}</p>
-    </div>
-  )
-}
-
-const App=() =>{
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  return(
-    <div>
-      <Header course={course.name}/>
-      <Content parts={course.parts}/>
-      <Total parts={course.parts}/>
-    </div>
-  )
-}
-
-export default App;
+export default App
