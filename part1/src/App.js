@@ -7,60 +7,27 @@ const Button = (props) => (
   </button>
 )
 
-const StatisticLine = (props) => (
-  <tr><td>{props.text}</td><td>{props.value}</td></tr>
-)
-
-const Statistics = (props) => {
-  if (props.total !== 0) 
-    return (
-      <table>
-        <tbody>
-        <StatisticLine text='good' value={props.good}/>
-        <StatisticLine text='neutral' value={props.neutral}/>
-        <StatisticLine text='bad' value={props.bad}/>
-        <tr><td>total</td><td>{props.total}</td></tr>
-        <tr><td>average</td><td>{props.positive / props.total}</td></tr>
-        <tr><td>positive</td><td>{(props.good / props.total)*100} %</td></tr>
-        </tbody>
-        </table>
-    )
-    return (
-      <div>No feedback given</div>
-    )
-  }
-
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [positive , setPositive] = useState(0);
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.'
+  ]
+   
+  const [selected, setSelected] = useState(0);
 
-  const setToGood = () => {
-    setGood(good + 1);
-    setPositive(positive + 1);
-    setTotal(total + 1);
-  };
-  const setToNeutral = () => {
-    setNeutral(neutral + 1);
-    setTotal(total + 1);
-  };
-  const setToBad = () => {
-    setBad(bad + 1);
-    setPositive(positive - 1);
-    setTotal(total + 1);
-  };
+  const randomNumber = () => setSelected(Math.floor(Math.random() * (6 - 0 + 1) + 0));
+  
 
   return (
-    <div>
-      <h2>give feedback</h2>
-      <Button handleClick={setToGood} text="good" />
-      <Button handleClick={setToNeutral} text="neutral"/>
-      <Button handleClick={setToBad} text="bad"/>
-      <h2>statistics</h2>
-      <Statistics good={good} neutral={neutral} bad={bad} total={total} positive={positive} />
-    </div>
+    <>
+      <div>{anecdotes[selected]}</div>
+      <Button text="next anecdote" handleClick={randomNumber}/>
+    </>
   )
 }
 
