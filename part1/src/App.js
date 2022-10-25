@@ -10,7 +10,6 @@ const Button = (props) => (
 const Statistics = (props) => {
   return (
     <>
-      <h2>statistics</h2>
       <div>good {props.good}</div>
       <div>neutral {props.neutral}</div>
       <div>bad {props.bad}</div>
@@ -49,6 +48,7 @@ const App = () => {
       <Button handleClick={setToGood} text="good" />
       <Button handleClick={setToNeutral} text="neutral"/>
       <Button handleClick={setToBad} text="bad"/>
+      <h2>statistics</h2>
       <Statistics good={good} neutral={neutral} bad={bad} total={total} positive={positive} />
     </div>
   )
