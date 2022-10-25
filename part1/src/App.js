@@ -7,13 +7,17 @@ const Button = (props) => (
   </button>
 )
 
+const StatisticLine = (props) => (
+  <div>{props.text} {props.value}</div>
+)
+
 const Statistics = (props) => {
   if (props.total !== 0) 
     return (
       <>
-        <div>good {props.good}</div>
-        <div>neutral {props.neutral}</div>
-        <div>bad {props.bad}</div>
+        <StatisticLine text='good' value={props.good}/>
+        <StatisticLine text='neutral' value={props.neutral}/>
+        <StatisticLine text='bad' value={props.bad}/>
         <div>total {props.total}</div>
         <div>average {props.positive / props.total}</div>
         <div>positive {(props.good / props.total)*100} %</div>
