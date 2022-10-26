@@ -21,9 +21,6 @@ const Total = ({ parts }) => {
     )
 }
 
-
-
-
 const Course = (props) => {
     return (
         props.course.map((course, index) =>
@@ -35,4 +32,4 @@ const Course = (props) => {
     )
 }
 
-export default Course
+export default Course;
