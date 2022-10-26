@@ -15,10 +15,11 @@ const Content = ({ parts }) => {
 const Total = ({ total }) => <h4>total of {total} exercises</h4>
 
 const Course = (props) => {
-    let total =0;
-    for(let i = 0 ; i < props.course.parts.length ; i++){
-        total += props.course.parts[i].exercises
-    }
+    let t=0; 
+    const total = props.course.parts.reduce(function (s, p) {
+        t+=p.exercises
+        return t
+    })
     return (
         <>
             <Header name={props.course.name} />
