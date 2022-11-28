@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import axios from 'axios';
 
@@ -31,7 +31,20 @@ const App = () => {
       name.common.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  console.log('===========', filteredCountries)
+  const showContent = (id) => {
+    let el = document.getElementById('id-'+id);
+    let btn = document.getElementById('btn-'+id);
+
+    if(el.classList.contains('show')) {
+      el.style.display = 'none';
+      el.classList.remove('show');
+      btn.innerHTML  = 'show';
+    } else{
+      el.classList.add('show');
+    el.style.display = 'block';
+    btn.innerHTML  = 'hide';
+    }
+  }
   return (
     <div>
       {loading && <div>Loading...</div>}
@@ -40,10 +53,26 @@ const App = () => {
         value={searchText}
         onChange={({ target }) => setSearchText(target.value)}
       />
+      <p> </p>
       {searchText.length > 0 && filteredCountries.length >= 10 && <div>Too many matches, specify another filter.</div>}
 
       {searchText.length > 0 && filteredCountries.length < 10 && filteredCountries.length > 1 && filteredCountries.map((country) => (
-        <div key={country.name.common}>{country.name.common}</div>
+        <>
+        <div key={country.name.common}>{country.name.common} <button id={`btn-${country.area}`} onClick={() => showContent(country.area)}>show</button>
+          <div  className="country-details" key={country.name.common} style={{display: "none"}} id={`id-${country.area}`}>
+            <h2>{country.name.common}</h2>
+            <p>capital {country.capital}
+              <br />area {country.area}</p>
+            <div><b>languages:</b></div>
+            <ul>
+              {Object.keys(country.languages).map(key => {
+                return <li>{country.languages[key]}</li>
+              })}
+            </ul>
+            <img src={country.flags.png} />
+          </div>
+        </div>
+        </>
       ))}
 
       {searchText.length > 0 && filteredCountries.length == 1 && filteredCountries.map((country) => (
