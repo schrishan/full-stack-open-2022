@@ -1,39 +1,65 @@
 import { useEffect, useState } from 'react'
-import Persons from './components/Persons';
-import PersonForm from './components/PersonForm';
-import Filter from './components/Filter';
 
 import axios from 'axios';
 
 
 const App = () => {
-  const [persons, setPersons] =useState([]);
-  const [filterName, setFilterName] = useState('');
-  const [showAll, setShowAll] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [countries, setCountries] = useState([])
 
-    const hook = () => {
-      console.log('effect');
-      axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await axios
+        .get('https://restcountries.com/v3.1/all')
+        .then(response => {
+          setCountries(response.data)
+          setLoading(false);
+        }).catch(err => {
+          console.log('error', err);
+          setLoading(false);
+        });
     }
-    useEffect(hook, [])
+    fetchData();
+  }, [])
+  console.log('countries', countries);
 
-    const personsToShow = showAll
-    ? persons
-    : persons.filter(person => person.name === filterName);
+  const [searchText, setSearchText] = useState("");
 
+  const filteredCountries = Object.values(countries).filter(
+    ({ name }) =>
+      name.common.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  console.log('===========', filteredCountries)
   return (
     <div>
-      <h2>Phonebook</h2>
-      <Filter filterName={filterName} setFilterName={setFilterName} setShowAll={setShowAll}/>
-      <h2>add a new</h2>
-      <PersonForm persons={persons} getPersons={setPersons}/>
-      <h2>Numbers</h2>
-      <Persons persons={personsToShow}/>
+      {loading && <div>Loading...</div>}
+      <label>Find countries </label><input
+        type="text"
+        value={searchText}
+        onChange={({ target }) => setSearchText(target.value)}
+      />
+      {searchText.length > 0 && filteredCountries.length >= 10 && <div>Too many matches, specify another filter.</div>}
+
+      {searchText.length > 0 && filteredCountries.length < 10 && filteredCountries.length > 1 && filteredCountries.map((country) => (
+        <div key={country.name.common}>{country.name.common}</div>
+      ))}
+
+      {searchText.length > 0 && filteredCountries.length == 1 && filteredCountries.map((country) => (
+        <div key={country.name.common}>
+          <h2>{country.name.common}</h2>
+          <p>capital {country.capital}
+            <br />area {country.area}</p>
+          <div><b>languages:</b></div>
+          <ul>
+            {Object.keys(country.languages).map(key => {
+              return <li>{country.languages[key]}</li>
+            })}
+          </ul>
+          <img src={country.flags.png}/>
+        </div>
+      ))}
     </div>
   )
 }
