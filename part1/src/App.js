@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
-
+import { useEffect, useState} from 'react'
 import axios from 'axios';
+import Weather from './Weather';
 
 
 const App = () => {
@@ -22,6 +22,7 @@ const App = () => {
     }
     fetchData();
   }, [])
+
   console.log('countries', countries);
 
   const [searchText, setSearchText] = useState("");
@@ -45,6 +46,7 @@ const App = () => {
     btn.innerHTML  = 'hide';
     }
   }
+  console.log('filteredCountries', filteredCountries)
   return (
     <div>
       {loading && <div>Loading...</div>}
@@ -69,13 +71,15 @@ const App = () => {
                 return <li>{country.languages[key]}</li>
               })}
             </ul>
-            <img src={country.flags.png} />
+            <img src={country.flags.png} alt={country.name.common}/>
+              <Weather capital={country.capital}></Weather>
           </div>
         </div>
+        <br/>
         </>
       ))}
 
-      {searchText.length > 0 && filteredCountries.length == 1 && filteredCountries.map((country) => (
+      {searchText.length > 0 && filteredCountries.length === 1 && filteredCountries.map((country) => (
         <div key={country.name.common}>
           <h2>{country.name.common}</h2>
           <p>capital {country.capital}
@@ -86,7 +90,8 @@ const App = () => {
               return <li>{country.languages[key]}</li>
             })}
           </ul>
-          <img src={country.flags.png}/>
+          <img src={country.flags.png}  alt={country.name.common}/>
+          <Weather capital={country.capital}></Weather>
         </div>
       ))}
     </div>
