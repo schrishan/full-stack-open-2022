@@ -49,7 +49,6 @@ const App = () => {
             phoneNumbers[contactIndex]['number'] = returnedContact.number;
             setPhoneNumbers(phoneNumbers);
             setNewContact({ id: null, name: "", number: "" });  
-            console.log('phoneNumbers',phoneNumbers);
           }).catch(error => {
             alert(
               `the contact was already deleted from server`
