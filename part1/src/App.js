@@ -39,7 +39,6 @@ const App = () => {
         const changedContact = { ...contact, number: newContact.number}
           console.log('contact',contact);
           console.log('changedContact',changedContact);
-          console.log('contactFound',contactFound);
 
           phonebookService
           .update(changedContact.id, changedContact).then(returnedContact => {
