@@ -37,8 +37,6 @@ const App = () => {
       ) {
         let contact = phoneNumbers.find((obj) => obj.name.toLowerCase() === newContact.name.toLowerCase())
         const changedContact = { ...contact, number: newContact.number}
-          console.log('contact',contact);
-          console.log('changedContact',changedContact);
 
           phonebookService
           .update(changedContact.id, changedContact).then(returnedContact => {
