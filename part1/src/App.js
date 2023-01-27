@@ -1,6 +1,6 @@
 import { useEffect, useState} from 'react'
 import axios from 'axios';
-import Weather from './Weather';
+import Weather from './components/Weather';
 
 
 const App = () => {
