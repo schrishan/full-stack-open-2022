@@ -95,8 +95,7 @@ const App = () => {
     setPhoneNumbersToShow(
       phoneNumbers.filter((item) => {
         return (
-          item.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !==
-          -1
+          item.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !==-1
         );
       })
     );
