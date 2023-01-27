@@ -82,8 +82,7 @@ const App = () => {
       {searchText.length > 0 && filteredCountries.length === 1 && filteredCountries.map((country) => (
         <div key={country.name.common}>
           <h2>{country.name.common}</h2>
-          <p>capital {country.capital}
-            <br />area {country.area}</p>
+          <p>capital {country.capital}<br />area {country.area}</p>
           <div><b>languages:</b></div>
           <ul>
             {Object.keys(country.languages).map(key => {
@@ -97,5 +96,4 @@ const App = () => {
     </div>
   )
 }
-
 export default App
