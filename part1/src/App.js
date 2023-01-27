@@ -83,7 +83,7 @@ const App = () => {
         <div key={country.name.common}>
           <h2>{country.name.common}</h2>
           <p>capital {country.capital}<br />area {country.area}</p>
-          <div><b>languages:</b></div>
+          <div><b>languages:</b></div><br/>
           <ul>
             {Object.keys(country.languages).map(key => {
               return <li>{country.languages[key]}</li>
