@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import phonebookService from "./services/phonebook.service";
+import Footer from './components/Footer';
+import Notification from './components/Notification';
 
 const App = () => {
   const [newContact, setNewContact] = useState({
     id: null,
     name: "",
     number: "",
+  });
+  const [alertMessage, setAlertMessage] = useState({
+    message: "",
+    type: "",
   });
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [flterValue, setFlterValue] = useState("");
@@ -45,11 +51,16 @@ const App = () => {
         });
             phoneNumbers[contactIndex]['number'] = returnedContact.number;
             setPhoneNumbers(phoneNumbers);
-            setNewContact({ id: null, name: "", number: "" });  
+            setNewContact({ id: null, name: "", number: "" });
+            setAlertMessage({message:`${newContact.name} number updated successfully.`, type:'success'})  
+            setTimeout(() => {
+              setAlertMessage({message:null, type:null});
+            }, 5000)
           }).catch(error => {
-            alert(
-              `the contact was already deleted from server`
-            )
+            setAlertMessage({message:`Note '${newContact.name}' was already removed from server`, type:'error'})
+            setTimeout(() => {
+              setAlertMessage(null)
+            }, 5000)
           })
       }
     } else{
@@ -61,6 +72,10 @@ const App = () => {
         setPhoneNumbers(phoneNumbers.concat(returnedContact));
         setPhoneNumbersToShow(phoneNumbers.concat(returnedContact));
         setNewContact({ id: null, name: "", number: "" });
+        setAlertMessage({message:`${newContact.name} added successfully.`, type:'success'})  
+            setTimeout(() => {
+              setAlertMessage({message:null, type:null});
+            }, 5000)
       });
     }
   };
@@ -90,6 +105,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={alertMessage.message} type={alertMessage.type}/>
+      <br/>
       <div className="fillter-wrp">
         <label>filter showen with </label>
         <input onChange={handleSearch} />
@@ -126,6 +143,7 @@ const App = () => {
           </li>
         ))}
       </ul>
+      <Footer/>
     </div>
   );
 };
