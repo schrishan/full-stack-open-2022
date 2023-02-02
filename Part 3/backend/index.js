@@ -42,11 +42,16 @@ app.get('/api/persons/:id', (request, response) => {
   person?response.json(person):response.status(404).end()
 })
 
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+  response.status(204).end()
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on post ${PORT}`)
 })
-
 
 // const { request, response } = require('express')
 // const express = require('express')
